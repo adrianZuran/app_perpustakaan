@@ -6,6 +6,7 @@ use App\Http\Controllers\LoanController;
 use App\Http\Controllers\MemberController;
 use Illuminate\Support\Facades\Route;
 
+
 Route::get('/', function () {
     return view('welcome');
 });
