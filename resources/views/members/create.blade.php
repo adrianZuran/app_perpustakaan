@@ -1,62 +1,15 @@
-{{-- File: resources/views/members/create.blade.php --}}
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <title>Tambah Anggota</title>
-    <style>
-        body {
-            font-family: sans-serif;
-            margin: 40px;
-            max-width: 500px;
-        }
+@extends('layouts.app')
 
-        label {
-            display: block;
-            margin-top: 12px;
-            font-weight: bold;
-        }
+@section('title', 'Daftar Member')
 
-        input,
-        textarea,
-        select {
-            width: 100%;
-            padding: 6px;
-            margin-top: 4px;
-            box-sizing: border-box;
-        }
+@section('content')
+<h1>Tambah Member</h1>
+<p><a href="{{ route('members.index') }}">&larr; Kembali ke daftar Member</a></p>
 
-        .error {
-            color: #b91c1c;
-            font-size: 14px;
-            margin-top: 4px;
-        }
+<form action="{{ route('members.store') }}" method="POST">
+    @csrf
 
-        .btn {
-            margin-top: 20px;
-            padding: 8px 16px;
-            background: #2563eb;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
-
-    <h1>Tambah Anggota</h1>
-
-    <p>
-        <a href="{{ route('members.index') }}">
-            &larr; Kembali ke daftar anggota
-        </a>
-    </p>
-
-    <form action="{{ route('members.store') }}" method="POST">
-        @csrf
-
-        <label for="nama">Nama</label>
+    <label for="nama">Nama</label>
         <input
             type="text"
             name="nama"
@@ -124,11 +77,11 @@
         <select name="status" id="status">
             <option value="">-- Pilih Status --</option>
 
-            <option value="Aktif" @selected(old('status') == 'Aktif')>
+            <option value="aktif" @selected(old('status') == 'aktif')>
                 Aktif
             </option>
 
-            <option value="Nonaktif" @selected(old('status') == 'Nonaktif')>
+            <option value="nonaktif" @selected(old('status') == 'nonaktif')>
                 Nonaktif
             </option>
         </select>
@@ -142,6 +95,5 @@
             Simpan
         </button>
     </form>
-
-</body>
-</html>
+</form>
+@endsection

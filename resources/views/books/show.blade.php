@@ -1,17 +1,8 @@
-{{-- File: resources/views/books/show.blade.php --}}
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <title>Detail Buku</title>
-    <style>
-        body { font-family: sans-serif; margin: 40px; max-width: 500px; }
-        table { border-collapse: collapse; width: 100%; margin-top: 16px; }
-        th, td { border: 1px solid #ccc; padding: 8px 12px; text-align: left; }
-        th { width: 160px; background: #f3f4f6; }
-    </style>
-</head>
-<body>
+@extends('layouts.app')
+
+@section('title', 'Detail Buku')
+
+@section('content')
     <h1>Detail Buku</h1>
     <p><a href="{{ route('books.index') }}">&larr; Kembali ke daftar buku</a></p>
 
@@ -41,5 +32,4 @@
             <td>{{ $book['category_id'] }}</td>
         </tr>
     </table>
-</body>
-</html>
+@endsection
