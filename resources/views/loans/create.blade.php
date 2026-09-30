@@ -24,11 +24,12 @@
     @enderror
 
     <label for="user_id">Petugas</label>
-    <select name="user_id" id="user_id">
+    <select name="user_id" id="user_id" required>
         <option value="">-- Pilih Petugas --</option>
+
         @foreach ($users as $user)
-            <option value="{{ $user['id'] }}" @selected(old('user_id') == $user['id'])>
-                {{ $user['name'] }}
+            <option value="{{ $user->id }}">
+                {{ $user->name }}
             </option>
         @endforeach
     </select>

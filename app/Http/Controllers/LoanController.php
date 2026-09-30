@@ -11,12 +11,21 @@ use App\Models\User;
 class LoanController extends Controller
 {
 
-public function index()
-{
-    $loans = Loan::with(['member', 'user', 'loanItems.book'])->paginate(10);
-
-    return view('loans.index', compact('loans'));
-}
+    public function index()
+    {
+        $loans = Loan::with(['member', 'user', 'loanItems.book'])->paginate(10);
+    
+        foreach ($loans as $loan) {
+            if (
+                $loan->status === 'dipinjam' &&
+                $loan->tanggal_kembali < now()->toDateString()
+            ) {
+                $loan->status = 'terlambat';
+            }
+        }
+    
+        return view('loans.index', compact('loans'));
+    }
 
 public function show(string $id)
 {
@@ -95,6 +104,17 @@ public function destroy(string $id)
         ->with('success', 'Transaksi peminjaman berhasil dihapus.');
 }
 
+public function kembalikan(string $id)
+{
+    $loan = Loan::findOrFail($id);
 
+    $loan->update([
+        'status' => 'dikembalikan',
+        'tanggal_dikembalikan' => now()->toDateString(),
+    ]);
+
+    return redirect()->route('loans.index')
+        ->with('success', 'Buku berhasil dikembalikan.');
+}
 
 }

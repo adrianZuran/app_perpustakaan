@@ -33,12 +33,34 @@
                     </td>
                     <td>{{ $loan['tanggal_pinjam'] }}</td>
                     <td>{{ $loan['tanggal_kembali'] }}</td>
-                    <td>{{ ucfirst($loan['status']) }}</td>
+                    <td>
+                        @if ($loan['status'] === 'dikembalikan')
+                            <span class="badge badge-success">Dikembalikan</span>
+
+                            @if ($loan['tanggal_dikembalikan'] > $loan['tanggal_kembali'])
+                                <span class="badge badge-danger">Terlambat</span>
+                            @endif
+
+                        @elseif ($loan['status'] === 'terlambat')
+                            <span class="badge badge-danger">Terlambat</span>
+
+                        @elseif ($loan['status'] === 'dipinjam')
+                            <span class="badge badge-warning">Dipinjam</span>
+                        @endif
+                    </td>
                     <td>
                         <a href="{{ route('loans.show', $loan['id']) }}">Detail</a>
                         |
                         <a href="{{ route('loans.edit', $loan['id']) }}">Edit</a>
-                        |
+                    
+                        @if (in_array($loan['status'], ['dipinjam', 'terlambat']))
+                            <form action="{{ route('loans.kembalikan', $loan['id']) }}" method="POST" class="inline">
+                                @csrf
+                                @method('PUT')
+                                <button type="submit">Kembalikan</button>
+                            </form>
+                        @endif
+                    
                         <form class="inline" action="{{ route('loans.destroy', $loan['id']) }}" method="POST">
                             @csrf
                             @method('DELETE')
