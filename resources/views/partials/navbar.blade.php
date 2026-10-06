@@ -19,6 +19,7 @@
             @endif
             <li><a href="{{ route('members.index') }}" class="{{ request()->routeIs('members.*') ? 'active' : '' }}">Anggota</a></li>
             <li><a href="{{ route('loans.index') }}" class="{{ request()->routeIs('loans.*') ? 'active' : '' }}">Peminjaman</a></li>
+            <li><a href="{{ route('profile') }}" class="{{ request()->routeIs('profile') ? 'active' : '' }}"> Profil </a></li>
         </ul>
         <div class="navbar-user">
             <span>{{ auth()->user()->name }} ({{ ucfirst(auth()->user()->role) }})</span>
