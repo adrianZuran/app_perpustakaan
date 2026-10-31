@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Http\Client\ConnectionException;
+use Illuminate\Support\Facades\Http;
 
 use Illuminate\Http\Request;
 use App\Models\Loan;
@@ -113,6 +115,28 @@ public function kembalikan(string $id)
 
     return redirect()->route('loans.index')
         ->with('success', 'Buku berhasil dikembalikan.');
+}
+
+public function report(Request $request)
+{
+    $body = ['data' => [], 'meta' => null];
+
+    try {
+        $response = Http::get(config('services.internal_api.base_url').'/api/loans', [
+            'page' => $request->query('page', 1),
+        ]);
+
+        if ($response->successful()) {
+            $body = $response->json();
+        }
+    } catch (ConnectionException $e) {
+        // Server internal API (port 8011) tidak bisa dihubungi - tabel laporan tampil kosong.
+    }
+
+    return view('loans.report', [
+        'loans' => $body['data'] ?? [],
+        'meta' => $body['meta'] ?? null,
+    ]);
 }
 
 }
