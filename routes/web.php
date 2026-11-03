@@ -18,7 +18,7 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['admin'])->group(function () {
         Route::resource('categories', CategoryController::class)->except(['show']);
     });
-    Route::get('/', function () { return view('welcome'); });
+    // Route::get('/', function () { return view('welcome'); });
     Route::resource('books', BookController::class);
     Route::resource('categories', CategoryController::class)->except(['show']);
     Route::resource('members', MemberController::class);
